@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: ${{ matrix.os }}
+    name: ${{ matrix.os }}-build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -20,7 +20,7 @@ jobs:
       - name: make check
         run: make check
   r7rs-tests:
-    name: ${{ matrix.os }}
+    name: ${{ matrix.os }}-r7rs-tests
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
