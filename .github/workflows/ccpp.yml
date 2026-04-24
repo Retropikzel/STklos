@@ -19,18 +19,25 @@ jobs:
         run: make -j1
       - name: make check
         run: make check
-  windows-build:
-    name: windows
-    runs-on: windows-latest
+  r7rs-tests:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v6
-      - name: Install mingw
-        run: choco install mingw
       - name: timestamp correction
         run:  ./utils/time-correct
       - name: configure
         run: ./configure
       - name: make
-        run: ls && make -j1
+        run: make -j1
       - name: make check
         run: make check
+      - name: Install chibi-scheme
+        run: git clone https://github.com/ashinn/chibi-scheme.git --depth=1 && cd chibi-scheme && make && sudo make installs
+      - name: Install (chibi test)
+        run: snow-chibi install --impls=stklos chibi.test
+      - name: Run r7rs-tests
+        run: stklos chibi-scheme/tests/r7rs-tests.scm
