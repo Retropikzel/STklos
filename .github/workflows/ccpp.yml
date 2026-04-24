@@ -3,19 +3,89 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  build:
-
+  build-ubuntu:
+    name: build-ubuntu
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: timestamp correction
-      run:  ./utils/time-correct
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make -j1
-    - name: make check
-      run: make check
-#    - name: make distcheck
-#      run: make distcheck
+      - uses: actions/checkout@v6
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
+  build-alpine:
+    name: build-alpine
+    runs-on: ubuntu-latest
+    container:
+      image: alpine
+    steps:
+      - name: Install packages
+        run: apk add build-base autoconf automake linux-headers
+      - uses: actions/checkout@v6
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
+  r7rs-tests:
+    name: r7rs-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
+      - name: make install
+        run: sudo make install
+      - name: Clone tests
+        run: git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+      - name: Make tests use (srfi 64)
+        run: |
+          sed -i 's/(chibi test)/(srfi 64)/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i 's/(test /(test-equal /g' chibi-scheme/tests/r7rs-tests.scm
+      - name: Comment out tests that error
+        run: |
+          sed -i '137 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '346 s/^/;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '347 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '413 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '463 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '569 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '595 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '633 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '663 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+      - name: Comment out tests that do not work on (SRFI 64)
+        run: |
+          sed -i '917 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '918 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '919 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '920 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '921 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '922 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '923 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '924 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '925 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2128 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2281 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2351 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2357 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2358 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2359 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+      - name: Run r7rs-tests
+        run: stklos chibi-scheme/tests/r7rs-tests.scm
+      - name: Upload log
+        uses: actions/upload-artifact@main
+        with:
+          name: log
+          path: R7RS.log
