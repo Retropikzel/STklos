@@ -35,6 +35,8 @@ jobs:
         run: make -j1
       - name: make check
         run: make check
+      - name: make install
+        run: sudo make install
       - name: Clone tests
         run: git clone https://github.com/ashinn/chibi-scheme.git --depth=1 
       - name: Use (srfi 64) for tests
