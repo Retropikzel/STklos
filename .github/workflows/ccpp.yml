@@ -3,13 +3,27 @@ name: C/C++ CI
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: ${{ matrix.os }}-build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+  build-ubuntu:
+    name: build-ubuntu
+    runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
+  build-alpine:
+    name: build-alpine
+    runs-on: ubuntu-latest
+    container:
+      image: alpine
+    steps:
+      - name: Install packages
+        run: apk add build-base
       - uses: actions/checkout@v6
       - name: timestamp correction
         run:  ./utils/time-correct
