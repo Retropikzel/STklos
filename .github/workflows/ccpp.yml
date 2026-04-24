@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v6
     - name: timestamp correction
@@ -21,3 +21,18 @@ jobs:
       run: make check
 #    - name: make distcheck
 #      run: make distcheck
+  windows-build:
+    name: windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install mingw
+        run: choco install mingw
+    - name: timestamp correction
+      run:  ./utils/time-correct
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make -j1
+    - name: make check
+      run: make check
