@@ -1,14 +1,16 @@
 name: C/C++ CI
 
-on: [push]
+on: [push, pull-request]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v6
     - name: timestamp correction
       run:  ./utils/time-correct
     - name: configure
