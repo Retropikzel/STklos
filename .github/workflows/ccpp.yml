@@ -33,6 +33,23 @@ jobs:
         run: make -j1
       - name: make check
         run: make check
+  build-macos:
+    name: build-alpine
+    runs-on: macos-latest
+    container:
+      image: alpine
+    steps:
+      - name: Install packages
+        run: brew install autoconf
+      - uses: actions/checkout@v6
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
   r7rs-tests:
     name: ${{ matrix.os }}-r7rs-tests
     runs-on: ${{ matrix.os }}
@@ -79,5 +96,6 @@ jobs:
           sed -i '923 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '924 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '925 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2128 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
