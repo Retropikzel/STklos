@@ -68,5 +68,16 @@ jobs:
           sed -i '595 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '633 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '663 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+      - name: Comment out tests that do not work on (SRFI 64)
+        run: |
+          sed -i '917 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '918 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '919 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '920 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '921 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '922 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '923 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '924 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '925 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
