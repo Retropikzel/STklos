@@ -23,7 +23,7 @@ jobs:
       image: alpine
     steps:
       - name: Install packages
-        run: apk add build-base
+        run: apk add build-base autoconf automake
       - uses: actions/checkout@v6
       - name: timestamp correction
         run:  ./utils/time-correct
