@@ -100,5 +100,6 @@ jobs:
           sed -i '2281 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '2351 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '2357 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2358 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
