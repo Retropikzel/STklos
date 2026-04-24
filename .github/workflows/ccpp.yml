@@ -49,7 +49,9 @@ jobs:
       - name: make install
         run: sudo make install
       - name: Clone tests
-        run: git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+        run: |
+          git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+          git -C chibi-scheme checkout 97faa0bf2d123c558d7ab79216906567c44cb03c
       - name: Make tests use (srfi 64)
         run: |
           sed -i 's/(chibi test)/(srfi 64)/' chibi-scheme/tests/r7rs-tests.scm
