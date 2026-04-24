@@ -35,9 +35,9 @@ jobs:
         run: make -j1
       - name: make check
         run: make check
-      - name: Install chibi-scheme
-        run: git clone https://github.com/ashinn/chibi-scheme.git --depth=1 && cd chibi-scheme && make && sudo make installs
-      - name: Install (chibi test)
-        run: snow-chibi install --impls=stklos chibi.test
+      - name: Clone tests
+        run: git clone https://github.com/ashinn/chibi-scheme.git --depth=1 
+      - name: Use (srfi 64) for tests
+        run: sed -i 's/(chibi tests)/(srfi 64)/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
