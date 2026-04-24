@@ -10,15 +10,15 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     steps:
-    - uses: actions/checkout@v6
-    - name: timestamp correction
-      run:  ./utils/time-correct
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make -j1
-    - name: make check
-      run: make check
+      - uses: actions/checkout@v6
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
   windows-build:
     name: windows
     runs-on: windows-latest
@@ -26,11 +26,11 @@ jobs:
       - uses: actions/checkout@v6
       - name: Install mingw
         run: choco install mingw
-    - name: timestamp correction
-      run:  ./utils/time-correct
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make -j1
-    - name: make check
-      run: make check
+      - name: timestamp correction
+        run:  ./utils/time-correct
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make -j1
+      - name: make check
+        run: make check
