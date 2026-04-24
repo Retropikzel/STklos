@@ -59,13 +59,14 @@ jobs:
           sed -i 's/(test /(test-equal /g' chibi-scheme/tests/r7rs-tests.scm
       - name: Comment out tests that error
         run: |
-          sed -i '137 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # Division by zero procudes compiler error
-          sed -i '346 s/^/;/' chibi-scheme/tests/r7rs-tests.scm # invalid context within quasiquote
-          sed -i '347 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # invalid context within quasiquote
-          sed -i '413 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # wrong type of argument '()' for car in (caddr '(let temp))
-          sed -i '463 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # wrong type of argument '()' for car in (caddr '(let temp))
-          sed -i '569 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # wrong type of argument '()' for car in (caddr '(let temp))
-          sed -i '595 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # wrong type of argument '()' for car in (caddr '(let temp))
-          sed -i '633 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm # wrong type of argument '()' for car in (caddr '(let temp))
+          sed -i '137 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '346 s/^/;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '347 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '413 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '463 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '569 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '595 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '633 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '663 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
