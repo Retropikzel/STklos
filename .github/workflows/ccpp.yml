@@ -98,7 +98,7 @@ jobs:
           sed -i '925 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '2128 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
           sed -i '2281 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
-          sed -i '2282 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
-          sed -i '2283 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2351 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
+          sed -i '2357 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
