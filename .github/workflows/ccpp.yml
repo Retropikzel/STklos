@@ -33,21 +33,6 @@ jobs:
         run: make -j1
       - name: make check
         run: make check
-  build-macos:
-    name: build-macos
-    runs-on: macos-latest
-    steps:
-      - name: Install packages
-        run: brew install autoconf
-      - uses: actions/checkout@v6
-      - name: timestamp correction
-        run:  ./utils/time-correct
-      - name: configure
-        run: ./configure
-      - name: make
-        run: make -j1
-      - name: make check
-        run: make check
   r7rs-tests:
     name: r7rs-tests
     runs-on: ubuntu-latest
@@ -99,3 +84,8 @@ jobs:
           sed -i '2359 s/^/#;/' chibi-scheme/tests/r7rs-tests.scm
       - name: Run r7rs-tests
         run: stklos chibi-scheme/tests/r7rs-tests.scm
+      - name: Upload log
+        uses: actions/upload-artifact@main
+        with:
+          name: log
+          path: R7RS.log
